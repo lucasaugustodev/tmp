@@ -84,3 +84,6 @@ OneDrive/
 
 # RDP files
 *.rdp
+
+# Sensitive files
+ssh-test.js
