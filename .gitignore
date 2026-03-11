@@ -1,0 +1,86 @@
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Windows
+NTUSER.DAT*
+*.regtrans-ms
+*.blf
+
+# User-specific files
+Desktop/
+Documents/
+Downloads/
+Pictures/
+Music/
+Videos/
+Favorites/
+Links/
+Contacts/
+Saved Games/
+Searches/
+AppData/
+3D Objects/
+OneDrive/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Application data
+.ssh/
+.config/
+.cache/
+.local/
+.m2/
+.bun/
+.aws/
+.playwright/
+.playwright-cli/
+.playwright-mcp/
+.lmstudio/
+.trae/
+.trae-aicc/
+.fly/
+.gemini/
+.openfang/
+.kiro/
+.basic-memory/
+.ansel/
+.icube-remote-ssh/
+.apm/
+.chocolatey/
+.claude-mem/
+.scoop/
+.pack/
+
+# Project specific
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+!package.json
+!package-lock.json
+
+# RDP files
+*.rdp
