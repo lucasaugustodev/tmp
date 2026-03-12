@@ -1,5 +1,14 @@
-import winrm, time
-s = winrm.Session("216.238.117.49", auth=("Administrator", "vD_9uF{FmAAq6Q6s"), transport="ntlm", read_timeout_sec=120, operation_timeout_sec=90)
+import winrm, time, os
+
+# Get credentials from environment variables
+VM_HOST = os.environ.get("VM_HOST", "216.238.117.49")
+VM_USER = os.environ.get("VM_USER", "Administrator")
+VM_PASS = os.environ.get("VM_PASS", "")
+
+if not VM_PASS:
+    raise ValueError("VM_PASS environment variable is required")
+
+s = winrm.Session(VM_HOST, auth=(VM_USER, VM_PASS), transport="ntlm", read_timeout_sec=120, operation_timeout_sec=90)
 
 r = s.run_cmd("hostname")
 print(f"Host: {r.std_out.decode().strip()}")
