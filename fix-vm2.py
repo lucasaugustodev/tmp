@@ -1,19 +1,28 @@
 import winrm
 s = winrm.Session("216.238.117.49", auth=("Administrator", "vD_9uF{FmAAq6Q6s"), transport="ntlm", read_timeout_sec=60, operation_timeout_sec=45)
 
-# Check if agent pack exists
+# Check agent pack
 r = s.run_cmd(r'dir C:\lucasaugustodev-agents\README.md')
-print(f"Agent pack exists: {r.status_code == 0}")
-print(r.std_out.decode().strip()[:200])
+print(f"Agent pack: RC={r.status_code}")
 
-# Check if claude-mem exists
+# Check claude-mem
 r = s.run_cmd(r'dir C:\claude-mem\package.json')
-print(f"claude-mem exists: {r.status_code == 0}")
+print(f"claude-mem: RC={r.status_code}")
 
-# Check installed plugins
-r = s.run_cmd(r'type C:\Users\Administrator\.claude\plugins\installed_plugins.json')
-print(f"Installed plugins: {r.std_out.decode().strip()[:500]}")
+# Check port
+r = s.run_cmd('powershell -c "(Test-NetConnection -ComputerName localhost -Port 3001).TcpTestSucceeded"')
+print(f"Port 3001: {r.std_out.decode().strip()}")
 
-# Check installed agents dir
-r = s.run_cmd(r'dir C:\Users\Administrator\.claude\commands')
-print(f"Agents dir: {r.std_out.decode().strip()[:500]}")
+# Check node running
+r = s.run_cmd('tasklist /fi "imagename eq node.exe"')
+print(f"Node: {r.std_out.decode().strip()[:300]}")
+
+# Try to curl localhost
+r = s.run_cmd('powershell -c "try { (Invoke-WebRequest http://localhost:3001/api/health -TimeoutSec 5).StatusCode } catch { $_.Exception.Message }"')
+print(f"Health: {r.std_out.decode().strip()[:300]}")
+
+# Get stdout/stderr logs
+r = s.run_cmd(r'type C:\claude-launcher-web\stdout.log')
+print(f"\n=== STDOUT ===\n{r.std_out.decode().strip()[-1000:]}")
+r = s.run_cmd(r'type C:\claude-launcher-web\stderr.log')
+print(f"\n=== STDERR ===\n{r.std_out.decode().strip()[-1000:]}")
